@@ -9,7 +9,7 @@
     /* Outer light brown frame */
     body {
       margin: 0;
-      padding: 20px; /* outer light brown padding */
+      padding: 10px; /* smaller side padding */
       font-family: Arial, sans-serif;
       background: #d2b48c;
       display: flex;
@@ -25,9 +25,9 @@
       padding: 20px 25px;
       border-radius: 20px;
       text-align: center;
-      width: 90%;       /* adapt to screen width */
-      max-width: 400px; /* max width for desktops */
-      min-width: 250px; /* min width for small phones */
+      width: 90%;       /* adaptable */
+      max-width: 350px;
+      min-width: 220px;
       min-height: 350px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
@@ -100,7 +100,7 @@
     @media (max-width: 768px) {
       .content-frame {
         width: 95%;
-        max-width: 350px;
+        max-width: 320px;
         min-width: 200px;
       }
 
@@ -129,7 +129,7 @@
     @media (max-width: 480px) {
       .content-frame {
         width: 95%;
-        max-width: 280px;
+        max-width: 260px;
         min-width: 200px;
       }
 
@@ -184,8 +184,11 @@
       document.getElementById("media").src =
         "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
 
+      // Remove both buttons
+      yesBtn.style.display = "none";
       noBtn.style.display = "none";
 
+      // Replace question with Hurray message
       questionText.innerHTML = `
         <div class="hurray-title">Hurray! 🎉</div>
         <div class="hurray-subtitle">I love you so much! ❤️</div>
@@ -198,33 +201,22 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      const maxX = buttonsContainer.offsetWidth - btnWidth;
-      const maxY = buttonsContainer.offsetHeight - btnHeight;
+      const containerRect = buttonsContainer.getBoundingClientRect();
+      const maxX = containerRect.width - btnWidth;
+      const maxY = containerRect.height - btnHeight;
 
-      const moveTowardYes = Math.random() < 0.3;
-
-      let x, y;
-
-      if (moveTowardYes) {
-        const yesRect = yesBtn.getBoundingClientRect();
-        const containerRect = buttonsContainer.getBoundingClientRect();
-
-        const yesX = yesRect.left - containerRect.left;
-        const yesY = yesRect.top - containerRect.top;
-
-        x = yesX + Math.random() * 30 - 15;
-        y = yesY + Math.random() * 30 - 15;
-      } else {
-        x = Math.random() * maxX;
-        y = Math.random() * maxY;
-      }
-
-      x = Math.max(0, Math.min(x, maxX));
-      y = Math.max(0, Math.min(y, maxY));
+      // Random new position within the white frame area
+      let x = Math.random() * maxX;
+      let y = Math.random() * maxY;
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
+
+    // Optional: keep the No button moving automatically
+    setInterval(() => {
+      if (noBtn.style.display !== "none") runAway();
+    }, 1000); // every 1 second
   </script>
 
 </body>
