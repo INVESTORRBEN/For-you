@@ -10,7 +10,7 @@
     /* Outer pink background frame */
     body {
       margin: 0;
-      padding: 0.3cm; /* reduced padding for thinner pink frame */
+      padding: 0.3cm;
       font-family: Arial, sans-serif;
       background: pink;
       display: flex;
@@ -32,14 +32,13 @@
     .emoji-left { left: 10px; }
     .emoji-right { right: 10px; }
 
-    /* Inner white frame - made bigger */
     .content-frame {
       background: #ffffff;
       padding: 30px 35px;
       border-radius: 20px;
       text-align: center;
-      width: 95%; /* increased from 90% */
-      max-width: 500px; /* increased from 350px */
+      width: 92%;
+      max-width: 420px;
       min-width: 280px;
       min-height: 450px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -49,7 +48,7 @@
 
     img {
       width: 100%;
-      max-width: 400px; /* increased to fit larger frame */
+      max-width: 350px;
       margin: 20px auto;
       display: block;
       border-radius: 15px;
@@ -60,18 +59,19 @@
       color: red;
       font-size: 1.8em;
       margin: 15px 0;
+      font-weight: bold;
     }
 
     /* Hurray styles */
     .hurray-title {
       color: #d2b48c;
-      font-size: 1.5em;
+      font-size: 2.25em;
       margin: 20px 0 10px 0;
       line-height: 1.2;
     }
 
     .hurray-subtitle {
-      color: #d2b48c;
+      color: #000000;
       font-size: 1.2em;
       margin: 0;
     }
@@ -93,6 +93,7 @@
       cursor: pointer;
       position: absolute;
       transition: left 0.2s, top 0.2s;
+      font-weight: bold;
     }
 
     #yesBtn {
@@ -160,7 +161,6 @@
   <div class="emoji-right">💐</div>
 
   <div class="content-frame">
-    <!-- First media shown initially -->
     <img
       id="media"
       src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
@@ -186,15 +186,12 @@
     const questionText = document.getElementById("questionText");
 
     function sayYes() {
-      // Switch to second media
       document.getElementById("media").src =
         "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
 
-      // Remove both buttons
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
 
-      // Replace question with Hurray message
       questionText.innerHTML = `
         <div class="hurray-title">Hurray! 🎉</div>
         <div class="hurray-subtitle">I love you so much! ❤️</div>
@@ -206,14 +203,35 @@
     function runAway() {
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
-
-      const containerWidth = buttonsContainer.offsetWidth;
-      const containerHeight = buttonsContainer.offsetHeight;
-
-      // Random position within buttonsContainer (inner white frame area)
-      const x = Math.random() * (containerWidth - btnWidth);
-      const y = Math.random() * (containerHeight - btnHeight);
-
+      const media = document.getElementById("media");
+      
+      const frameWidth = contentFrame.offsetWidth;
+      const frameHeight = contentFrame.offsetHeight;
+      const mediaRect = media.getBoundingClientRect();
+      const frameRect = contentFrame.getBoundingClientRect();
+      
+      let x, y;
+      let attempts = 0;
+      const maxAttempts = 50;
+      
+      do {
+        x = Math.random() * (frameWidth - btnWidth);
+        y = Math.random() * (frameHeight - btnHeight);
+        
+        const btnLeft = frameRect.left + x;
+        const btnTop = frameRect.top + y;
+        const btnRight = btnLeft + btnWidth;
+        const btnBottom = btnTop + btnHeight;
+        
+        const overlapX = btnRight > mediaRect.left && btnLeft < mediaRect.right;
+        const overlapY = btnBottom > mediaRect.top && btnTop < mediaRect.bottom;
+        const overlaps = overlapX && overlapY;
+        
+        if (!overlaps) break;
+        
+        attempts++;
+      } while (attempts < maxAttempts);
+      
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
