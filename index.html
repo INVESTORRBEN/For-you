@@ -53,7 +53,7 @@
 
   <img
     id="media"
-    src="/mnt/data/07E86BD9-8BB5-4CDC-B0E1-FAE4B37275DA.jpeg"
+    src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
     alt="Cute image"
   />
 
@@ -67,7 +67,7 @@
   <script>
     function sayYes() {
       document.getElementById("media").src =
-        "/mnt/data/FE6A3A87-915F-4AC0-9F54-97C9AC62546A.jpeg";
+        "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
 
       document.getElementById("question").innerText =
         "Hurray! 🎉 I love you so much! ❤️";
@@ -78,8 +78,16 @@
     function runAway() {
       const noBtn = document.getElementById("noBtn");
 
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 100);
+      // Get button dimensions
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      // Calculate max x and y so button stays fully visible
+      const maxX = window.innerWidth - btnWidth - 10; // 10px padding
+      const maxY = window.innerHeight - btnHeight - 10;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
