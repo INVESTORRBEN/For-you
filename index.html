@@ -9,15 +9,26 @@
     /* Outer light brown frame */
     body {
       margin: 0;
-      padding: 10px; /* smaller side padding */
+      padding: 10px; /* small outer padding */
       font-family: Arial, sans-serif;
       background: #d2b48c;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
       box-sizing: border-box;
+      position: relative;
     }
+
+    /* 💐 emojis at top-left and top-right */
+    .emoji-left, .emoji-right {
+      position: absolute;
+      top: 10px;
+      font-size: 2em;
+    }
+
+    .emoji-left { left: 10px; }
+    .emoji-right { right: 10px; }
 
     /* Inner white frame */
     .content-frame {
@@ -25,18 +36,19 @@
       padding: 20px 25px;
       border-radius: 20px;
       text-align: center;
-      width: 90%;       /* adaptable */
+      width: 90%;
       max-width: 350px;
       min-width: 220px;
-      min-height: 350px;
+      min-height: 400px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
       box-sizing: border-box;
+      margin-top: 40px; /* to avoid overlapping emojis */
     }
 
     img {
       width: 100%;
-      max-width: 250px;
+      max-width: 300px; /* make bigger inside white frame */
       margin: 20px auto;
       display: block;
       border-radius: 15px;
@@ -45,7 +57,7 @@
     /* Question style */
     #questionText {
       color: red;
-      font-size: 1.5em;
+      font-size: 1.8em;
       margin: 15px 0;
     }
 
@@ -75,7 +87,7 @@
     button {
       padding: 12px 25px;
       font-size: 18px;
-      border-radius: 25px; /* pill shape */
+      border-radius: 25px;
       border: none;
       cursor: pointer;
       position: absolute;
@@ -104,26 +116,12 @@
         min-width: 200px;
       }
 
-      img {
-        max-width: 200px;
-      }
+      img { max-width: 250px; }
 
-      #questionText {
-        font-size: 1.3em;
-      }
-
-      .hurray-title {
-        font-size: 1.3em;
-      }
-
-      .hurray-subtitle {
-        font-size: 1em;
-      }
-
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-      }
+      #questionText { font-size: 1.5em; }
+      .hurray-title { font-size: 1.3em; }
+      .hurray-subtitle { font-size: 1em; }
+      button { padding: 10px 20px; font-size: 16px; }
     }
 
     @media (max-width: 480px) {
@@ -133,42 +131,32 @@
         min-width: 200px;
       }
 
-      img {
-        max-width: 180px;
-      }
+      img { max-width: 200px; }
 
-      #questionText {
-        font-size: 1.2em;
-      }
-
-      .hurray-title {
-        font-size: 1.2em;
-      }
-
-      .hurray-subtitle {
-        font-size: 0.95em;
-      }
-
-      button {
-        padding: 8px 18px;
-        font-size: 15px;
-      }
+      #questionText { font-size: 1.3em; }
+      .hurray-title { font-size: 1.2em; }
+      .hurray-subtitle { font-size: 0.95em; }
+      button { padding: 8px 18px; font-size: 15px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- 💐 emojis at top-left and top-right -->
+  <div class="emoji-left">💐</div>
+  <div class="emoji-right">💐</div>
+
   <div class="content-frame">
     <img
       id="media"
-      src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
+      src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif"
       alt="Cute image"
     />
 
     <div id="questionText">Alexandra, will you be my valentine? 🌹</div>
 
     <div class="buttons">
-      <button id="yesBtn" onclick="sayYes()">Yes</button>
+      <button id="yesBtn" onclick="sayYes()">Yes!</button>
       <button id="noBtn" onmouseover="runAway()">No</button>
     </div>
   </div>
@@ -181,9 +169,7 @@
     const questionText = document.getElementById("questionText");
 
     function sayYes() {
-      document.getElementById("media").src =
-        "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
-
+      // Keep same media (already IMG_3371.gif)
       // Remove both buttons
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
@@ -194,29 +180,23 @@
         <div class="hurray-subtitle">I love you so much! ❤️</div>
       `;
 
-      contentFrame.style.minHeight = "350px";
+      contentFrame.style.minHeight = "400px";
     }
 
     function runAway() {
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      const containerRect = buttonsContainer.getBoundingClientRect();
-      const maxX = containerRect.width - btnWidth;
-      const maxY = containerRect.height - btnHeight;
+      const containerWidth = buttonsContainer.offsetWidth;
+      const containerHeight = buttonsContainer.offsetHeight;
 
-      // Random new position within the white frame area
-      let x = Math.random() * maxX;
-      let y = Math.random() * maxY;
+      // Random position within buttonsContainer (inner white frame area)
+      const x = Math.random() * (containerWidth - btnWidth);
+      const y = Math.random() * (containerHeight - btnHeight);
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
     }
-
-    // Optional: keep the No button moving automatically
-    setInterval(() => {
-      if (noBtn.style.display !== "none") runAway();
-    }, 1000); // every 1 second
   </script>
 
 </body>
