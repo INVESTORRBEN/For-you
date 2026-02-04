@@ -3,30 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <title>Valentine 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    /* Outer frame */
     body {
+      margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: #fff0f5;
+      background: #d2b48c; /* light brown outer frame */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Inner frame */
+    .content-frame {
+      background: #ffffff; /* white inner frame */
+      padding: 30px;
+      border-radius: 20px;
       text-align: center;
-      padding-top: 40px;
-      overflow: hidden;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      position: relative;
     }
 
     img {
+      width: 100%;
       max-width: 300px;
       margin: 20px auto;
       display: block;
+      border-radius: 15px;
     }
 
     h1 {
       color: #ff4d6d;
+      font-size: 1.5em;
+      margin: 15px 0;
     }
 
     .buttons {
       margin-top: 20px;
       position: relative;
-      height: 200px;
+      height: 100px;
     }
 
     button {
@@ -41,27 +62,30 @@
     }
 
     #yesBtn {
-      left: 40%;
+      left: 30%; /* adjust spacing */
     }
 
     #noBtn {
+      left: 55%; /* adjust spacing */
       background: #999;
     }
   </style>
 </head>
 <body>
 
-  <img
-    id="media"
-    src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
-    alt="Cute image"
-  />
+  <div class="content-frame">
+    <img
+      id="media"
+      src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
+      alt="Cute image"
+    />
 
-  <h1 id="question">Alexandra, will you be my valentine?</h1>
+    <h1 id="question">🌹 Alexandra, will you be my valentine? 🌹</h1>
 
-  <div class="buttons">
-    <button id="yesBtn" onclick="sayYes()">Yes 💕</button>
-    <button id="noBtn" onmouseover="runAway()">No 😅</button>
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">Yes 💕</button>
+      <button id="noBtn" onmouseover="runAway()">No 😅</button>
+    </div>
   </div>
 
   <script>
@@ -82,9 +106,10 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Calculate max x and y so button stays fully visible
-      const maxX = window.innerWidth - btnWidth - 10; // 10px padding
-      const maxY = window.innerHeight - btnHeight - 10;
+      // Calculate max x and y so button stays fully visible within inner frame
+      const frame = document.querySelector('.content-frame');
+      const maxX = frame.offsetWidth - btnWidth - 10; // padding
+      const maxY = frame.offsetHeight - btnHeight - 10;
 
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
