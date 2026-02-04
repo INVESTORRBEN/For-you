@@ -47,7 +47,7 @@
     .buttons {
       margin-top: 20px;
       position: relative;
-      height: 100px;
+      height: 120px; /* enough space for button movement */
     }
 
     button {
@@ -61,12 +61,15 @@
       position: absolute;
     }
 
+    /* Space Yes and No within inner frame */
     #yesBtn {
-      left: 30%; /* spacing */
+      left: 20%;
+      top: 20px;
     }
 
     #noBtn {
-      left: 55%; /* spacing */
+      left: 55%;
+      top: 20px;
       background: #999;
     }
   </style>
@@ -83,7 +86,7 @@
     <h1 id="question">Alexandra, will you be my valentine? 🌹</h1>
 
     <div class="buttons">
-      <button id="yesBtn" onclick="sayYes()">Yes 💕</button>
+      <button id="yesBtn" onclick="sayYes()">Yes</button>
       <button id="noBtn" onmouseover="runAway()">No</button>
     </div>
   </div>
@@ -101,13 +104,13 @@
 
     function runAway() {
       const noBtn = document.getElementById("noBtn");
+      const frame = document.querySelector('.content-frame');
 
       // Get button dimensions
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Calculate max x and y so button stays fully visible within inner frame
-      const frame = document.querySelector('.content-frame');
+      // Limit movement within inner white frame
       const maxX = frame.offsetWidth - btnWidth - 10; // padding
       const maxY = frame.offsetHeight - btnHeight - 10;
 
