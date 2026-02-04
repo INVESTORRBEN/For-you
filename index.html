@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine 💖</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff0f5;
+      text-align: center;
+      padding-top: 40px;
+      overflow: hidden;
+    }
+
+    img {
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    h1 {
+      color: #ff4d6d;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      position: relative;
+      height: 200px;
+    }
+
+    button {
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yesBtn {
+      left: 40%;
+    }
+
+    #noBtn {
+      background: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <img
+    id="media"
+    src="/mnt/data/07E86BD9-8BB5-4CDC-B0E1-FAE4B37275DA.jpeg"
+    alt="Cute image"
+  />
+
+  <h1 id="question">Alexandra, will you be my valentine?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">Yes 💕</button>
+    <button id="noBtn" onmouseover="runAway()">No 😅</button>
+  </div>
+
+  <script>
+    function sayYes() {
+      document.getElementById("media").src =
+        "/mnt/data/FE6A3A87-915F-4AC0-9F54-97C9AC62546A.jpeg";
+
+      document.getElementById("question").innerText =
+        "Hurray! 🎉 I love you so much! ❤️";
+
+      document.getElementById("noBtn").style.display = "none";
+    }
+
+    function runAway() {
+      const noBtn = document.getElementById("noBtn");
+
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+  </script>
+
+</body>
+</html>
