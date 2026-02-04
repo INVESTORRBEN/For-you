@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* Outer light brown frame */
+    /* Outer pink background frame */
     body {
       margin: 0;
-      padding: 10px; /* small outer padding */
+      padding: 0.1cm; /* very thin outer padding */
       font-family: Arial, sans-serif;
-      background: #d2b48c;
+      background: pink; /* changed from light brown */
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center; /* vertically center white frame */
       min-height: 100vh;
       box-sizing: border-box;
       position: relative;
@@ -43,7 +43,6 @@
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
       box-sizing: border-box;
-      margin-top: 40px; /* to avoid overlapping emojis */
     }
 
     img {
@@ -57,14 +56,14 @@
     /* Question style */
     #questionText {
       color: red;
-      font-size: 1.8em;
+      font-size: 1.8em; /* 1.2x bigger */
       margin: 15px 0;
     }
 
     /* Hurray styles */
     .hurray-title {
-      color: #d2b48c;
-      font-size: 1.5em;
+      color: #d2b48c; /* keep light brown for hurray text */
+      font-size: 1.5em;  /* 1.5x larger */
       margin: 20px 0 10px 0;
       line-height: 1.2;
     }
@@ -147,9 +146,10 @@
   <div class="emoji-right">💐</div>
 
   <div class="content-frame">
+    <!-- First media shown initially -->
     <img
       id="media"
-      src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif"
+      src="https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3372.gif"
       alt="Cute image"
     />
 
@@ -169,7 +169,10 @@
     const questionText = document.getElementById("questionText");
 
     function sayYes() {
-      // Keep same media (already IMG_3371.gif)
+      // Switch to second media
+      document.getElementById("media").src =
+        "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
+
       // Remove both buttons
       yesBtn.style.display = "none";
       noBtn.style.display = "none";
