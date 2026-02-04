@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* Outer frame */
+    /* Outer light brown frame */
     body {
       margin: 0;
-      padding: 20px; /* small padding on all sides for outer frame visibility */
+      padding: 20px; /* outer light brown padding */
       font-family: Arial, sans-serif;
-      background: #d2b48c; /* light brown outer frame */
+      background: #d2b48c;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,77 +19,140 @@
       box-sizing: border-box;
     }
 
-    /* Inner frame */
+    /* Inner white frame */
     .content-frame {
-      background: #ffffff; /* white inner frame */
-      padding: 30px;
+      background: #ffffff;
+      padding: 20px 25px;
       border-radius: 20px;
       text-align: center;
-      max-width: 500px;
-      width: 100%;
+      width: 90%;       /* adapt to screen width */
+      max-width: 400px; /* max width for desktops */
+      min-width: 250px; /* min width for small phones */
+      min-height: 350px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
-      min-height: 400px; /* keep consistent height */
       box-sizing: border-box;
     }
 
     img {
       width: 100%;
-      max-width: 300px;
+      max-width: 250px;
       margin: 20px auto;
       display: block;
       border-radius: 15px;
     }
 
-    h1 {
-      color: #ff4d6d;
+    /* Question style */
+    #questionText {
+      color: red;
       font-size: 1.5em;
       margin: 15px 0;
     }
 
-    /* Special Hurray style */
+    /* Hurray styles */
     .hurray-title {
-      color: #d2b48c; /* light brown */
-      font-size: 3em;  /* 3x larger */
+      color: #d2b48c;
+      font-size: 1.5em;
       margin: 20px 0 10px 0;
       line-height: 1.2;
     }
 
     .hurray-subtitle {
-      color: #ffffff; /* keep white */
-      font-size: 1.5em;
+      color: #d2b48c;
+      font-size: 1.2em;
       margin: 0;
     }
 
+    /* Buttons container */
     .buttons {
       margin-top: 20px;
       position: relative;
       width: 100%;
-      height: 120px; /* enough space for button movement */
+      height: 120px;
     }
 
+    /* Yes/No buttons */
     button {
-      background: #ff4d6d;
-      color: white;
-      border: none;
       padding: 12px 25px;
       font-size: 18px;
-      border-radius: 25px; /* more rounded edges */
+      border-radius: 25px; /* pill shape */
+      border: none;
       cursor: pointer;
       position: absolute;
-      transition: left 0.2s, top 0.2s; /* smooth movement */
+      transition: left 0.2s, top 0.2s;
     }
 
-    /* Yes/No button spacing */
     #yesBtn {
       left: 20%;
       top: 30px;
+      background: #ff4d6d;
+      color: white;
     }
 
     #noBtn {
       left: 60%;
       top: 30px;
       background: #999;
+      color: white;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .content-frame {
+        width: 95%;
+        max-width: 350px;
+        min-width: 200px;
+      }
+
+      img {
+        max-width: 200px;
+      }
+
+      #questionText {
+        font-size: 1.3em;
+      }
+
+      .hurray-title {
+        font-size: 1.3em;
+      }
+
+      .hurray-subtitle {
+        font-size: 1em;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .content-frame {
+        width: 95%;
+        max-width: 280px;
+        min-width: 200px;
+      }
+
+      img {
+        max-width: 180px;
+      }
+
+      #questionText {
+        font-size: 1.2em;
+      }
+
+      .hurray-title {
+        font-size: 1.2em;
+      }
+
+      .hurray-subtitle {
+        font-size: 0.95em;
+      }
+
+      button {
+        padding: 8px 18px;
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -102,7 +165,7 @@
       alt="Cute image"
     />
 
-    <h1 id="question">Alexandra, will you be my valentine? 🌹</h1>
+    <div id="questionText">Alexandra, will you be my valentine? 🌹</div>
 
     <div class="buttons">
       <button id="yesBtn" onclick="sayYes()">Yes</button>
@@ -115,24 +178,20 @@
     const noBtn = document.getElementById("noBtn");
     const buttonsContainer = document.querySelector('.buttons');
     const contentFrame = document.querySelector('.content-frame');
-    const question = document.getElementById("question");
+    const questionText = document.getElementById("questionText");
 
     function sayYes() {
-      // Update image
       document.getElementById("media").src =
         "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
 
-      // Clear buttons
       noBtn.style.display = "none";
 
-      // Replace question with Hurray message
-      question.innerHTML = `
+      questionText.innerHTML = `
         <div class="hurray-title">Hurray! 🎉</div>
         <div class="hurray-subtitle">I love you so much! ❤️</div>
       `;
 
-      // Keep inner frame height consistent
-      contentFrame.style.minHeight = "400px";
+      contentFrame.style.minHeight = "350px";
     }
 
     function runAway() {
@@ -142,8 +201,7 @@
       const maxX = buttonsContainer.offsetWidth - btnWidth;
       const maxY = buttonsContainer.offsetHeight - btnHeight;
 
-      // Random chance to move toward Yes button
-      const moveTowardYes = Math.random() < 0.3; // 30% chance
+      const moveTowardYes = Math.random() < 0.3;
 
       let x, y;
 
@@ -154,8 +212,8 @@
         const yesX = yesRect.left - containerRect.left;
         const yesY = yesRect.top - containerRect.top;
 
-        x = yesX + Math.random() * 40 - 20; // ±20px
-        y = yesY + Math.random() * 40 - 20; // ±20px
+        x = yesX + Math.random() * 30 - 15;
+        y = yesY + Math.random() * 30 - 15;
       } else {
         x = Math.random() * maxX;
         y = Math.random() * maxY;
