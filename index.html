@@ -9,13 +9,14 @@
     /* Outer frame */
     body {
       margin: 0;
-      padding: 0;
+      padding: 20px; /* small padding on all sides for outer frame visibility */
       font-family: Arial, sans-serif;
       background: #d2b48c; /* light brown outer frame */
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      box-sizing: border-box;
     }
 
     /* Inner frame */
@@ -25,10 +26,11 @@
       border-radius: 20px;
       text-align: center;
       max-width: 500px;
-      width: 90%;
+      width: 100%;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
       min-height: 400px; /* keep consistent height */
+      box-sizing: border-box;
     }
 
     img {
@@ -45,6 +47,20 @@
       margin: 15px 0;
     }
 
+    /* Special Hurray style */
+    .hurray-title {
+      color: #d2b48c; /* light brown */
+      font-size: 3em;  /* 3x larger */
+      margin: 20px 0 10px 0;
+      line-height: 1.2;
+    }
+
+    .hurray-subtitle {
+      color: #ffffff; /* keep white */
+      font-size: 1.5em;
+      margin: 0;
+    }
+
     .buttons {
       margin-top: 20px;
       position: relative;
@@ -58,9 +74,10 @@
       border: none;
       padding: 12px 25px;
       font-size: 18px;
-      border-radius: 8px;
+      border-radius: 25px; /* more rounded edges */
       cursor: pointer;
       position: absolute;
+      transition: left 0.2s, top 0.2s; /* smooth movement */
     }
 
     /* Yes/No button spacing */
@@ -98,17 +115,23 @@
     const noBtn = document.getElementById("noBtn");
     const buttonsContainer = document.querySelector('.buttons');
     const contentFrame = document.querySelector('.content-frame');
+    const question = document.getElementById("question");
 
     function sayYes() {
+      // Update image
       document.getElementById("media").src =
         "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
 
-      document.getElementById("question").innerText =
-        "Hurray! 🎉 I love you so much! ❤️";
-
+      // Clear buttons
       noBtn.style.display = "none";
 
-      // Ensure inner frame stays the same height
+      // Replace question with Hurray message
+      question.innerHTML = `
+        <div class="hurray-title">Hurray! 🎉</div>
+        <div class="hurray-subtitle">I love you so much! ❤️</div>
+      `;
+
+      // Keep inner frame height consistent
       contentFrame.style.minHeight = "400px";
     }
 
