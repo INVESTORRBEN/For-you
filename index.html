@@ -28,6 +28,7 @@
       width: 90%;
       box-shadow: 0 10px 20px rgba(0,0,0,0.2);
       position: relative;
+      min-height: 400px; /* keep consistent height */
     }
 
     img {
@@ -48,7 +49,7 @@
       margin-top: 20px;
       position: relative;
       width: 100%;
-      height: 100px; /* enough space for button movement */
+      height: 120px; /* enough space for button movement */
     }
 
     button {
@@ -62,7 +63,7 @@
       position: absolute;
     }
 
-    /* Yes button on the left, No button on the right */
+    /* Yes/No button spacing */
     #yesBtn {
       left: 20%;
       top: 30px;
@@ -93,6 +94,11 @@
   </div>
 
   <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const buttonsContainer = document.querySelector('.buttons');
+    const contentFrame = document.querySelector('.content-frame');
+
     function sayYes() {
       document.getElementById("media").src =
         "https://raw.githubusercontent.com/INVESTORRBEN/For-you/refs/heads/main/IMG_3371.gif";
@@ -100,23 +106,40 @@
       document.getElementById("question").innerText =
         "Hurray! 🎉 I love you so much! ❤️";
 
-      document.getElementById("noBtn").style.display = "none";
+      noBtn.style.display = "none";
+
+      // Ensure inner frame stays the same height
+      contentFrame.style.minHeight = "400px";
     }
 
     function runAway() {
-      const noBtn = document.getElementById("noBtn");
-      const buttonsContainer = document.querySelector('.buttons');
-
-      // Get button dimensions
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      // Limit movement within the buttons container
       const maxX = buttonsContainer.offsetWidth - btnWidth;
       const maxY = buttonsContainer.offsetHeight - btnHeight;
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      // Random chance to move toward Yes button
+      const moveTowardYes = Math.random() < 0.3; // 30% chance
+
+      let x, y;
+
+      if (moveTowardYes) {
+        const yesRect = yesBtn.getBoundingClientRect();
+        const containerRect = buttonsContainer.getBoundingClientRect();
+
+        const yesX = yesRect.left - containerRect.left;
+        const yesY = yesRect.top - containerRect.top;
+
+        x = yesX + Math.random() * 40 - 20; // ±20px
+        y = yesY + Math.random() * 40 - 20; // ±20px
+      } else {
+        x = Math.random() * maxX;
+        y = Math.random() * maxY;
+      }
+
+      x = Math.max(0, Math.min(x, maxX));
+      y = Math.max(0, Math.min(y, maxY));
 
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
